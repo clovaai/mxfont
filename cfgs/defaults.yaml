@@ -1,0 +1,89 @@
+use_ddp: False
+port:
+
+batch_size: 8
+
+resume: 
+work_dir: ./result
+max_iter: 800000
+seed: 2
+g_lr: 2e-4
+d_lr: 1e-3
+ac_lr: 2e-4
+n_workers: 8
+adam_betas: [0.0, 0.9]
+init: kaiming
+
+language: chn
+decomposition:
+primals:
+
+dset_aug:
+  normalize: True
+  random_affine: False
+
+dset:
+  train:
+    data_dir:
+    n_in_s: 3
+    n_in_c: 3
+  val:
+    data_dir:
+    n_ref: 4
+    source_font:
+  test:
+    data_dir:
+    source_font:
+    gen_chars_file:
+
+# model
+C: 32
+g_args:
+  style_enc:
+    norm: in
+    activ: relu
+    pad_type: zero
+    skip_scale_var: False
+  experts:
+    n_experts: 6
+    norm: in
+    activ: relu
+    pad_type: zero
+    skip_scale_var: False
+  emb_num: 2
+  dec:
+    norm: in
+    activ: relu
+    pad_type: zero
+    out: sigmoid
+d_args:
+  w_norm: spectral
+  activ: relu
+  gap_activ: relu
+  pad_type: zero
+  res_scale_var: False
+ac_args:
+  norm: in
+  activ: relu
+  pad_type: zero
+  conv_dropout: 0.3
+  clf_dropout: 0.2
+
+# losses
+pixel_loss_type: l1
+pixel_w: 0.1
+gan_w: 1.0
+fm_layers: all
+fm_w: 1.0
+ac_w: 1.0
+ac_gen_w: 1.0
+ac_cross_w: 1.0
+indp_exp_w: 1.0
+indp_fact_w: 1.0
+
+# etc
+save: all-last
+print_freq: 1000
+val_freq: 10000
+save_freq: 50000
+tb_freq: 100

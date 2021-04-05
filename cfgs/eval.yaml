@@ -1,0 +1,5 @@
+dset:
+  test:
+    data_dir: data/images/test   # path to reference images
+    source_font: data/ttfs/chn_source.ttf    # path to .ttf file used as the source font during the generation
+    gen_chars_file: data/chn_gen.json   # path to file of the characters to generate. Leave blank if you want to generate all the available characters in the source font.
