@@ -1,6 +1,18 @@
 # Introduction
 
-Pytorch implementation of ***Multiple Heads are Better than One: Few-shot Font Generation with Multiple Localized Expert***.
+Pytorch implementation of ***Multiple Heads are Better than One: Few-shot Font Generation with Multiple Localized Expert***. | [paper](https://arxiv.org/abs/2104.00887)
+
+Song Park<sup>1</sup>, Sanghyuk Chun<sup>2, 3</sup>, Junbum Cha<sup>3</sup>, Bado Lee<sup>3</sup>, Hyunjung Shim<sup>1</sup><br>
+<sup>1</sup> <sub>School of Integrated Technology, Yonsei university</sub>  
+<sup>2</sup> <sub>NAVER AI Lab</sub>  
+<sup>3</sup> <sub>NAVER CLOVA</sub>
+
+A few-shot font generation (FFG) method has to satisfy two objectives: the generated images should preserve the underlying global structure of the target character and present the diverse local reference style. Existing FFG methods aim to disentangle content and style either by extracting a universal representation style or extracting multiple component-wise style representations. However, previous methods either fail to capture diverse local styles or cannot be generalized to a character with unseen components, e.g., unseen language systems. To mitigate the issues, we propose a novel FFG method, named Multiple Localized Experts Few-shot Font Generation Network (MX-Font). MX-Font extracts multiple style features not explicitly conditioned on component labels, but automatically by multiple experts to represent different local concepts, e.g., left-side sub-glyph. Owing to the multiple experts, MX-Font can capture diverse local concepts and show the generalizability to unseen languages. During training, we utilize component labels as weak supervision to guide each expert to be specialized for different local concepts. We formulate the component assign problem to each expert as the graph matching problem, and solve it by the Hungarian algorithm. We also employ the independence loss and the content-style adversarial loss to impose the content-style disentanglement. In our experiments, MX-Font outperforms previous state-of-the-art FFG methods in the Chinese generation and cross-lingual, e.g., Chinese to Korean, generation.
+
+You can find more related projects on the few-shot font generation at the following links:
+
+- [clovaai/dmfont](https://github.com/clovaai/dmfont) (ECCV'20)
+- [clovaai/lffont](https://github.com/clovaai/lffont) (AAAI'21)
 
 * * *
 
@@ -147,4 +159,15 @@ THE SOFTWARE.
 
 ## Acknowledgement
 
-This project is based on [clovaai/dmfont](https://github.com/clovaai/dmfont).
+This project is based on [clovaai/dmfont](https://github.com/clovaai/dmfont) and [clovaai/lffont](https://github.com/clovaai/lffont).
+
+## How to cite
+
+```
+@article{park2021mxfont,
+    title={Multiple Heads are Better than One: Few-shot Font Generation with Multiple Localized Experts},
+    author={Park, Song and Chun, Sanghyuk and Cha, Junbum and Lee, Bado and Shim, Hyunjung},
+    year={2021},
+    journal={arXiv preprint arXiv:2104.00887},
+}
+```
