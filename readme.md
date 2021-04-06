@@ -34,14 +34,29 @@ conda install numpy scipy scikit-image tqdm jsonlib-python3 fonttools
 
 
 # Usage
-The examples of datasets are in *(./data)*
+
 Note that, we only provide the example font files; not the font files used for the training the provided weight *(generator.pth)*.
 The example font files are downloaded from [here](https://www.freechinesefont.com/tag/commercial-use-ok/).
 
-## Training
-### Preparing font files (.ttf)
+## Preparing Data
+* The examples of datasets are in *(./data)*
+
+### Font files (.ttf)
 * Prepare the TrueType font files(.ttf) to use for the training and the validation.
 * Put the training font files and validation font files into separate directories.
+
+### The text files containing the available characters of .ttf files (.txt)
+* If you have the available character list of a .ttf file, save its available characters list to a text file (.txt) with the same name in the same directory with the ttf file.
+    * (example) **TTF file**: data/ttfs/train/MaShanZheng-Regular.ttf, **its available characters**: data/ttfs/train/MaShanZheng-Regular.txt
+* You can also generate the available characters files automatically using the `get_chars_from_ttf.py`
+```
+# Generating the available characters file
+
+python get_chars_from_ttf.py --root_dir path/to/ttf/dir
+```
+* --root_dir: The root directory to find the .ttf files. All the .ttf files under this directory and its subdirectories will be processed.
+
+### The json files with decomposition information (.json)
 * The files for the decomposition information are needed.
     * The files for the Chinese characters are provided. (data/chn_decomposition.json, data/primals.json)
     * If you want to train the model with a language other than Chinese, the files for the decomposition rule (see below) are also needed.
@@ -54,6 +69,8 @@ The example font files are downloaded from [here](https://www.freechinesefont.co
             * format: [**All** the components in the decomposition rule file]
             * example: ['亠', '厶', '川', '囗', '口']
 
+
+## Training
 
 ### Modify the configuration file (cfgs/train.yaml)
 
