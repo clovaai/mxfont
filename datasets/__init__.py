@@ -8,7 +8,7 @@ import torch
 
 from .imagefolder_dataset import ImageTestDataset
 from .ttf_dataset import TTFTrainDataset, TTFValDataset
-from .ttf_utils import get_available_chars, read_font, render
+from .ttf_utils import get_filtered_chars, read_font, render
 from torch.utils.data import DataLoader
 
 
@@ -51,4 +51,4 @@ def get_test_loader(cfg, transform, **kwargs):
     return dset, loader
 
 
-__all__ = ["get_trn_loader", "get_val_loader", "get_test_loader", "get_available_chars", "read_font", "render"]
+__all__ = ["get_trn_loader", "get_val_loader", "get_test_loader", "get_filtered_chars", "read_font", "render"]

@@ -11,7 +11,7 @@ import random
 import torch
 from torch.utils.data import Dataset
 
-from .ttf_utils import get_available_chars, read_font, render
+from .ttf_utils import read_font, render
 
 
 class TTFTrainDataset(Dataset):
@@ -53,7 +53,7 @@ class TTFTrainDataset(Dataset):
         filtered_chars = list(char_key_dict)
         key_char_dict = {}
         for key, chars in self.key_char_dict.items():
-            key_char_dict[key] = [c for c in chars if c in filtered_chars]
+            key_char_dict[key] = list(set(chars).intersection(filtered_chars))
 
         return key_char_dict, char_key_dict
 
@@ -122,11 +122,18 @@ class TTFValDataset(Dataset):
     def __init__(self, data_dir, source_font, char_filter, n_ref=4, n_gen=20, transform=None):
 
         self.data_dir = data_dir
-        self.source_font = read_font(source_font)
+        self.source_font = read_font(source_font) if source_font is not None else None
         self.n_ref = n_ref
         self.n_gen = n_gen
 
         self.key_font_dict, self.key_char_dict = load_data_list(data_dir, char_filter=char_filter)
+        if self.source_font is None:
+            self.char_key_dict = {}
+            for key, charlist in self.key_char_dict.items():
+                for char in charlist:
+                    self.char_key_dict.setdefault(char, []).append(key)
+
+            self.key_char_dict, self.char_key_dict = self.filter_chars()
         self.ref_chars, self.gen_chars = self.sample_ref_gen_chars(self.key_char_dict)
 
         self.gen_char_dict = {k: self.gen_chars for k in self.key_font_dict}
@@ -148,7 +155,13 @@ class TTFValDataset(Dataset):
         ref_imgs = torch.stack([self.transform(render(font, c))
                                 for c in self.ref_chars])
 
-        source_img = self.transform(render(self.source_font, char))
+        if self.source_font is not None:
+            source_font = self.source_font
+        else:
+            source_key = random.choice(self.char_key_dict[char])
+            source_font = self.key_font_dict[source_key]
+
+        source_img = self.transform(render(source_font, char))
         trg_img = self.transform(render(font, char))
 
         ret = {
@@ -202,9 +215,11 @@ def load_data_list(data_dir, char_filter=None):
         font = read_font(font_path)
         key_font_dict[font_path.stem] = font
 
-        chars = get_available_chars(font_path)
+        with open(str(font_path).replace(".ttf", ".txt")) as f:
+            chars = f.read()
+
         if char_filter is not None:
-            chars = [x for x in chars if x in char_filter]
-        key_char_dict[font_path.stem] = chars
+            chars = set(chars).intersection(char_filter)
+        key_char_dict[font_path.stem] = list(chars)
 
     return key_font_dict, key_char_dict
