@@ -1,3 +1,9 @@
+"""
+MX-Font
+Copyright (c) 2021-present NAVER Corp.
+MIT license
+"""
+
 import argparse
 from tqdm import tqdm
 from pathlib import Path
