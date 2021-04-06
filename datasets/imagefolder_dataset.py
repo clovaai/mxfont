@@ -11,7 +11,7 @@ from PIL import Image
 import torch
 from torch.utils.data import Dataset
 
-from .ttf_utils import get_available_chars, read_font, render
+from .ttf_utils import get_filtered_chars, read_font, render
 
 
 class ImageTestDataset(Dataset):
@@ -19,10 +19,10 @@ class ImageTestDataset(Dataset):
 
         self.data_dir = Path(data_dir)
         self.source_font = read_font(source_font)
-        self.gen_chars = get_available_chars(source_font)
+        self.gen_chars = get_filtered_chars(source_font)
         if gen_chars_file is not None:
             gen_chars = json.load(open(gen_chars_file))
-            self.gen_chars = [x for x in self.gen_chars if x in gen_chars]
+            self.gen_chars = list(set(self.gen_chars).intersection(set(gen_chars)))
 
         self.font_ref_chars = self.load_data_list(self.data_dir, extension)
 
