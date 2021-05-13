@@ -4,6 +4,7 @@ port:
 batch_size: 8
 
 resume: 
+force_resume: False
 work_dir: ./result
 max_iter: 800000
 seed: 2
