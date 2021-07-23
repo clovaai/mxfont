@@ -1,4 +1,4 @@
-# Introduction
+# MX-Font (ICCV 2021)
 
 Pytorch implementation of ***Multiple Heads are Better than One: Few-shot Font Generation with Multiple Localized Expert***. | [paper](https://arxiv.org/abs/2104.00887)
 
@@ -13,6 +13,7 @@ You can find more related projects on the few-shot font generation at the follow
 
 - [clovaai/dmfont](https://github.com/clovaai/dmfont) (ECCV'20)
 - [clovaai/lffont](https://github.com/clovaai/lffont) (AAAI'21)
+- [clovaai/mxfont](https://github.com/clovaai/mxfont) (ICCV'21)
 
 * * *
 
