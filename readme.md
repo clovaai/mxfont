@@ -182,10 +182,10 @@ This project is based on [clovaai/dmfont](https://github.com/clovaai/dmfont) and
 ## How to cite
 
 ```
-@article{park2021mxfont,
+@inproceedings{park2021mxfont,
     title={Multiple Heads are Better than One: Few-shot Font Generation with Multiple Localized Experts},
     author={Park, Song and Chun, Sanghyuk and Cha, Junbum and Lee, Bado and Shim, Hyunjung},
     year={2021},
-    journal={arXiv preprint arXiv:2104.00887},
+    booktitle={International Conference on Computer Vision (ICCV)},
 }
 ```
